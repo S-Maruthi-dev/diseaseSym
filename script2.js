@@ -167,7 +167,7 @@ nextButton.addEventListener('click', () => {
         
 
     } else {
-        feedbackElement.textContent = 'Game Over! You have completed all diseases.';
+        feedbackElement.textContent = 'Excellent You Completed Easy Level Now Play Medium Level ->> click on Home button';
         stopTimer();
         updateTimerDisplay();
         feedbackElement.className = 'correct';
