@@ -1,3 +1,16 @@
+
+// Function to get URL parameters
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Retrieve the input parameter and display it
+const userInput = getUrlParameter('input');
+document.getElementById('displayText').textContent = userInput ? decodeURIComponent(userInput) : 'No input provided';
+
+
+
 document.getElementById("next-btn").addEventListener("click", function() {
     var audio = document.getElementById("audio1");
     audio.play();
