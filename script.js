@@ -80,6 +80,7 @@ function loadDisease(diseaseIndex) {
         if (disease.symptoms.includes(droppedSymptom)) {
             feedbackElement.textContent = 'Correct!';
             feedbackElement.className = 'correct';
+            audi.play();
             if (!correctSymptoms.includes(droppedSymptom)) {
                 correctSymptoms.push(droppedSymptom);
                 const listItem = document.createElement('li');
@@ -90,12 +91,12 @@ function loadDisease(diseaseIndex) {
             if (disease.symptoms.length === 0) {
                 feedbackElement.textContent = 'Well done! Click Next to continue.';
                 feedbackElement.className = 'correct';
-                audi.play();
+               
                 nextButton.disabled = false;
             }
         } else {
             feedbackElement.textContent = 'Wrong! Try again.';
-            aud.play();
+           
             feedbackElement.className = '';
            if (!wrongSymptoms.includes(droppedSymptom)) {
                 wrongSymptoms.push(droppedSymptom);
