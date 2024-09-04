@@ -97,7 +97,10 @@ function loadDisease(diseaseIndex) {
             }
         } else {
             feedbackElement.textContent = 'Wrong! Try again.';
-            aud.play();
+            if( feedbackElement.textContent != 'Correct!'){ 
+                 aud.play();
+            }
+           
             feedbackElement.className = '';
            if (!wrongSymptoms.includes(droppedSymptom)) {
                 wrongSymptoms.push(droppedSymptom);
