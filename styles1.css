@@ -89,3 +89,9 @@ button {
     margin-bottom: 10px;
 }
 
+header {
+    background: rgb(5, 31, 176);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
