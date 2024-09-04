@@ -3,6 +3,43 @@ document.getElementById("next-btn").addEventListener("click", function() {
     audio.play();
 });
 
+let timerInterval;
+let seconds = 0;
+let isRunning = false;
+
+function updateTimerDisplay() {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    document.getElementById('timer').textContent = 
+        String(hours).padStart(2, '0') + ':' + 
+        String(minutes).padStart(2, '0') + ':' + 
+        String(secs).padStart(2, '0');
+}
+
+function startTimer() {
+    if (!isRunning) {
+        isRunning = true;
+        timerInterval = setInterval(() => {
+            seconds++;
+            updateTimerDisplay();
+        }, 1000);
+    }
+}
+
+function stopTimer() {
+    if (isRunning) {
+        clearInterval(timerInterval);
+        isRunning = false;
+    }
+}
+
+
+startTimer();
+
+
+
 
 
 
@@ -118,6 +155,8 @@ nextButton.addEventListener('click', () => {
 
     } else {
         feedbackElement.textContent = 'Game Over! You have completed all diseases.';
+        stopTimer();
+        updateTimerDisplay();
         feedbackElement.className = 'correct';
         nextButton.style.display = 'none';
     }
