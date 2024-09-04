@@ -79,8 +79,9 @@ function loadDisease(diseaseIndex) {
         const droppedSymptom = e.dataTransfer.getData('text/plain');
         if (disease.symptoms.includes(droppedSymptom)) {
             feedbackElement.textContent = 'Correct!';
+             audi.play();
             feedbackElement.className = 'correct';
-            audi.play();
+           
             if (!correctSymptoms.includes(droppedSymptom)) {
                 correctSymptoms.push(droppedSymptom);
                 const listItem = document.createElement('li');
