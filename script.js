@@ -1,3 +1,11 @@
+document.getElementById('next-btn').addEventListener('click', function() {
+    var audio = document.getElementById('audio1');
+    audio.play();
+});
+
+
+
+
 const diseases = [
     {
         name: 'sirah soola',
@@ -35,7 +43,8 @@ const feedbackElement = document.getElementById('feedback');
 const nextButton = document.getElementById('next-btn');
 const droppedList = document.getElementById('dropped-list');
 const wrongList = document.getElementById('wrong-list');
-
+var audi = document.getElementById('audio2');
+var aud = document.getElementById('audio3');
 function loadDisease(diseaseIndex) {
     const disease = diseases[diseaseIndex];
     diseaseNameElement.textContent = disease.name;
@@ -81,10 +90,12 @@ function loadDisease(diseaseIndex) {
             if (disease.symptoms.length === 0) {
                 feedbackElement.textContent = 'Well done! Click Next to continue.';
                 feedbackElement.className = 'correct';
+                audi.play();
                 nextButton.disabled = false;
             }
         } else {
             feedbackElement.textContent = 'Wrong! Try again.';
+            aud.play();
             feedbackElement.className = '';
            if (!wrongSymptoms.includes(droppedSymptom)) {
                 wrongSymptoms.push(droppedSymptom);
