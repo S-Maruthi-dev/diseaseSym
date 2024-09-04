@@ -95,3 +95,12 @@ header {
     padding: 1rem;
     text-align: center;
 }
+
+#displaySection{
+    font-size: 2em;
+   
+}
+#displayText{
+    
+    color: orangered;
+}
