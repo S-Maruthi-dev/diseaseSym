@@ -1,5 +1,5 @@
-document.getElementById('next-btn').addEventListener('click', function() {
-    var audio = document.getElementById('audio1');
+document.getElementById("next-btn").addEventListener("click", function() {
+    var audio = document.getElementById("audio1");
     audio.play();
 });
 
