@@ -1,9 +1,10 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #eeeded;
+    background-color: #eae6e6;
     margin: 0;
     padding: 0;
+    
 }
 
 #game-container {
@@ -57,11 +58,12 @@ body {
     color: #5bc0de;
 }
 
-button {
+#next-btn {
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
 }
+
 
 #dropped-symptoms, #wrong-symptoms {
     text-align: left;
@@ -81,13 +83,12 @@ button {
     border-radius: 5px;
 }
 
-.timer-container {
-    text-align: center;
-}
+
 
 #timer {
     font-size: 2em;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
+    align-items: center;
 }
 
 header {
@@ -105,3 +106,48 @@ header {
     
     color: orangered;
 }
+
+.hide{
+    display:none;
+}
+
+#tna{
+    font-size: 1.3em;
+}
+
+/* Ensure the Skip button is styled appropriately */
+#Skip {
+    background-color: #ff5922; /* Orange color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#Skip:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#next-btn:disabled{
+    cursor: not-allowed;
+}
+
+#details {
+    list-style-type: none; /* Removes bullet points */
+    padding: 5px; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+    display: flex; /* Enables flexbox layout */
+    gap: 20px; /* Adds space between items */
+    justify-content: center;
+}
+#details li {
+    display: flex; /* Allows for flexible item arrangement */
+}
+
