@@ -1,6 +1,8 @@
 document.getElementById('startGame').addEventListener('click', function() {
     const studentName = document.getElementById('studentName').value.trim();
     const difficulty = document.getElementById('difficulty').value;
+    var audio = document.getElementById("audio1");
+    audio.play();
 
     if (studentName === '') {
         alert('Please enter your name.');
