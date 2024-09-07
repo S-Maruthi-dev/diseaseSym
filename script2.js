@@ -1,4 +1,3 @@
-
 // Function to get URL parameters
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -8,8 +7,6 @@ function getUrlParameter(name) {
 // Retrieve the input parameter and display it
 const userInput = getUrlParameter('input');
 document.getElementById('displayText').textContent = userInput ? decodeURIComponent(userInput) : 'No input provided';
-
-
 
 document.getElementById("next-btn").addEventListener("click", function() {
     var audio = document.getElementById("audio1");
@@ -48,13 +45,7 @@ function stopTimer() {
     }
 }
 
-
 startTimer();
-
-
-
-
-
 
 const diseases = [
     {
@@ -67,7 +58,6 @@ const diseases = [
         symptoms: ['karna sparsha with Hasti', 'Siro Bramanam', 'Arati', 'Arachakam','Aswapna'],
         wrongSymptoms: ['Fever', 'Chest pain', 'Shortness of breath']
     },
-    // Add more diseases and their symptoms as needed
     {
         name: 'THUkha roga',
         symptoms: ['Laala Sravanam Atyartam', 'stana dwesha', 'Arati', 'kshira Udgirinam','Nasa swasa'],
@@ -77,24 +67,29 @@ const diseases = [
         name: 'kanta Vedana',
         symptoms: ['stanya udgirinam', 'Vistambam', 'sleshma sevanam', 'jwara','Aruchi', 'Glani'],
         wrongSymptoms: ['Headache', 'Rash', 'Stomachache']
-    },
-
-
+    }
 ];
 
 let currentDiseaseIndex = 0;
 let correctSymptoms = [];
 let wrongSymptoms = [];
+const numberOfDiseases = diseases.length;
+document.getElementById('qn').textContent = numberOfDiseases;
+let skipCount = 0; 
+let answeredCount = 0;
+let score = 0.0;
 
 const diseaseNameElement = document.getElementById('disease-name');
 const symptomsContainer = document.getElementById('symptoms-container');
 const dropArea = document.getElementById('drop-area');
 const feedbackElement = document.getElementById('feedback');
 const nextButton = document.getElementById('next-btn');
+const skipButton = document.getElementById('Skip');
 const droppedList = document.getElementById('dropped-list');
 const wrongList = document.getElementById('wrong-list');
-var audi = document.getElementById('audio2');
-var aud = document.getElementById('audio3');
+const audi = document.getElementById('audio2');
+const aud = document.getElementById('audio3');
+
 function loadDisease(diseaseIndex) {
     const disease = diseases[diseaseIndex];
     diseaseNameElement.textContent = disease.name;
@@ -103,15 +98,19 @@ function loadDisease(diseaseIndex) {
     feedbackElement.textContent = '';
     droppedList.innerHTML = '';
     wrongList.innerHTML = '';
-    correctSymptoms = [];
-    wrongSymptoms = [];
 
+    correctSymptoms = [];
+    wrongSymptoms = [];  
+    console.log(wrongSymptoms,correctSymptoms);
     // Create draggable symptoms
     const allSymptoms = [...disease.symptoms, ...disease.wrongSymptoms];
-    allSymptoms.forEach(symptom => {
+    const shuffledSymptoms = allSymptoms.sort(() => Math.random() - 0.5);
+
+    shuffledSymptoms.forEach((symptom, index) => {
         const symptomElement = document.createElement('div');
         symptomElement.textContent = symptom;
         symptomElement.className = 'symptom';
+        symptomElement.id = `${index}`;
         symptomElement.draggable = true;
         symptomElement.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('text/plain', symptom);
@@ -127,11 +126,24 @@ function loadDisease(diseaseIndex) {
     dropArea.addEventListener('drop', (e) => {
         e.preventDefault();
         const droppedSymptom = e.dataTransfer.getData('text/plain');
+        
+        // Remove the symptom from the symptoms container
+        const items = symptomsContainer.querySelectorAll('div');  
+        items.forEach(item => {
+            if (item.textContent.trim() === droppedSymptom) {
+                symptomsContainer.removeChild(item);
+            }
+        });
+
         if (disease.symptoms.includes(droppedSymptom)) {
             feedbackElement.textContent = 'Correct!';
-             audi.play();
+            audi.play();
             feedbackElement.className = 'correct';
-           
+
+            // Update the score for a correct answer
+            score += 0.1;
+            document.getElementById('rem').textContent = score.toFixed(1);
+
             if (!correctSymptoms.includes(droppedSymptom)) {
                 correctSymptoms.push(droppedSymptom);
                 const listItem = document.createElement('li');
@@ -142,18 +154,25 @@ function loadDisease(diseaseIndex) {
             if (disease.symptoms.length === 0) {
                 feedbackElement.textContent = 'Well done! Click Next to continue.';
                 feedbackElement.className = 'correct';
-               
+                answeredCount++;
+                document.getElementById('an').textContent = answeredCount;
                 nextButton.disabled = false;
+                skipButton.disabled = true;
             }
-        } else {
+        } else if(disease.wrongSymptoms.includes(droppedSymptom)) {
             feedbackElement.textContent = 'Wrong! Try again.';
-           
             feedbackElement.className = '';
-           if (!wrongSymptoms.includes(droppedSymptom)) {
+            aud.play();
+            // Update the score for a wrong answer
+            score -= 0.1;
+            document.getElementById('rem').textContent = score.toFixed(1);
+            
+            if (!wrongSymptoms.includes(droppedSymptom)) {
                 wrongSymptoms.push(droppedSymptom);
                 const listItem = document.createElement('li');
                 listItem.textContent = droppedSymptom;
-               // wrongList.appendChild(listItem);
+              //  wrongList.appendChild(listItem);
+                
             } 
         }
     });
@@ -164,14 +183,37 @@ nextButton.addEventListener('click', () => {
         currentDiseaseIndex++;
         loadDisease(currentDiseaseIndex);
         nextButton.disabled = true;
-        
-
+        skipButton.disabled = false;
     } else {
-        feedbackElement.textContent = 'Excellent You Completed Easy Level Now Play Medium Level ->> click on Home button';
+        feedbackElement.textContent = 'Excellent! You completed the Easy Level. Now play the Medium Level ->> click on the Home button';
         stopTimer();
         updateTimerDisplay();
+        document.getElementById('tna').textContent = "Time Taken: ";
         feedbackElement.className = 'correct';
         nextButton.style.display = 'none';
+    }
+});
+
+// Function to handle skipping the current disease
+skipButton.addEventListener('click', () => {
+    skipCount++; // Increment the skip counter
+    
+    
+    document.getElementById('sn').textContent = skipCount;  
+    
+    // Move to the next disease
+    if (currentDiseaseIndex < diseases.length - 1) {
+        currentDiseaseIndex++;
+        loadDisease(currentDiseaseIndex);
+        nextButton.disabled = true; // Disable the next button until the user completes the task
+        feedbackElement.textContent = ''; // Clear feedback
+    } else {
+        // If there are no more diseases to skip to
+        feedbackElement.textContent = 'You have reached the end of the list!';
+        stopTimer();
+        updateTimerDisplay();
+        document.getElementById('tna').textContent = "Time Taken: ";
+        skipButton.style.display = 'none'; // Hide the skip button
     }
 });
 
