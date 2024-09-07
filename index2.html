@@ -7,17 +7,33 @@
     <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
-    <header><span ><a href="index.html" style="color: white; text-decoration: none;">HOME</a></span> <h1 > Easy Level </h1> </header> <br>
-     <div id="displaySection">
+    <header><span ><a href="index.html" style="color: white; text-decoration: none;">HOME</a></span> <h1 > Easy Level </h1> </header>
+    <div id="displaySection">
+        
             <p> Student Name : <span id="displayText"></span></p>
      </div> 
-    <div class="timer-container">
-      <h3>Time Stars Now : </h3><div id="timer">00:00:00</div>
-    </div>
+     <div class="timer-container">
+       
+        <span id="tna">Time Stars Now :  </span>
+        <span id="timer">00:00:00</span>
+    </div> 
+    <br><br>
+    
+        <ul type="none" id="details">
+            <li><span id="q">Total Questions : <span id="qn">0</span> </span></li>
+            <li><span id="s">Skiped Questions : <span id="sn">0</span> </span></li>
+            <li><span id="ans">Answered Questions : <span id="an">0</span> </span></li>
+            
+            <li><span id="re"> Your Score : <span id="rem">0</span> </span></li>
+        </ul>
+  
+     <br>
     <hr><hr>
     <div id="game-container">
+        
         <div id="disease-container">
-            <h2 id="disease-name">Disease Name</h2>
+           
+            <h2 id="disease-name"> Disease Name</h2>
         </div>
         <div id="symptoms-container">
             <!-- Symptoms will be dynamically added here -->
@@ -30,7 +46,8 @@
                
             </div >
             <br> <br>
-            <button id="next-btn" disabled>Next Disease</button>   
+            <button id="next-btn" disabled>Next Disease</button>
+            <button id="Skip">Skip Disease</button>   
             <br>
             <div id="dropped-symptoms">
                 <h3>Correct Symptoms:</h3>
