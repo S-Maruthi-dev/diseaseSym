@@ -111,6 +111,11 @@ function loadDisease(diseaseIndex) {
         symptomElement.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('text/plain', symptom);
         });
+
+          // Prevent right-click to disable download option
+        symptomElement.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });        
     
         symptomsContainer.appendChild(symptomElement);
     });
