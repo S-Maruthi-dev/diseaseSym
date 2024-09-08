@@ -111,7 +111,48 @@ function loadDisease(diseaseIndex) {
         symptomElement.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('text/plain', symptom);
         });
+         // Handle touch events for mobile
+        symptomElement.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            symptomElement.style.position = 'absolute';
+            symptomElement.style.left = `${touch.clientX}px`;
+            symptomElement.style.top = `${touch.clientY}px`;
 
+            const onTouchMove = (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                symptomElement.style.left = `${touch.clientX}px`;
+                symptomElement.style.top = `${touch.clientY}px`;
+            };
+
+            const onTouchEnd = (e) => {
+                e.preventDefault();
+                symptomElement.style.position = '';
+                symptomElement.style.left = '';
+                symptomElement.style.top = '';
+                document.removeEventListener('touchmove', onTouchMove);
+                document.removeEventListener('touchend', onTouchEnd);
+
+                // Mimic drag-and-drop behavior
+                const dropEvent = new DragEvent('drop', {
+                    dataTransfer: {
+                        getData: () => symptom,
+                    },
+                    clientX: touch.clientX,
+                    clientY: touch.clientY,
+                });
+                dropArea.dispatchEvent(dropEvent);
+            };
+
+            document.addEventListener('touchmove', onTouchMove);
+            document.addEventListener('touchend', onTouchEnd);
+        });
+
+ 
+
+
+        
           // Prevent right-click to disable download option
         symptomElement.addEventListener('contextmenu', (e) => {
             e.preventDefault();
